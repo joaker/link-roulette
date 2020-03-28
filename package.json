@@ -1,0 +1,9 @@
+{
+  "name": "link-roulette",
+  "version": "1.0.0",
+  "description": "a wheel of links",
+  "main": "index.js",
+  "repository": "https://github.com/joaker/link-roulette.git",
+  "author": "John Oakley <jooakley@gmail.com>",
+  "license": "MIT"
+}
