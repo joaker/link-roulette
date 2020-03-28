@@ -26,7 +26,12 @@
 
       const links = [];
       for (let encoded of encodedLinks) {
-        const link = atob(encoded);
+        let link = atob(encoded);
+
+        if (link.indexOf("http") != 0) {
+          link = "https://" + link;
+        }
+
         links.push(link);
       }
 
