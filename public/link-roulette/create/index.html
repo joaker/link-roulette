@@ -1,0 +1,80 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <div id="root">
+      <h1>Link Creator</h1>
+      <h2>
+        Welcome to Link Roulette.<br />
+        Enter your links and create a link wheel.
+      </h2>
+      <div class="add-link">
+        <input
+          class="new-link"
+          placeholder="https://www.bing.com/"
+          onkeypress="return onInputKey(event)"
+        />
+        <button class="new-link-button" onclick="addLink()">Add</button>
+      </div>
+      <ul class="links"></ul>
+    </div>
+    <div class="actions">
+      <button class="create-link-roulette" onclick="createLinkRoulette()">
+        Create Link Roulette
+      </button>
+    </div>
+    <div class="roulette-link"></div>
+    <script>
+      // lifted from: https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
+      const urlPattern = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+
+      function isUrl(url = "") {
+        const regex = new RegExp(urlPattern);
+        return url.match(regex);
+      }
+
+      function addLink() {
+        var value = document.querySelector(".new-link").value.trim();
+
+        if (!isUrl(value)) {
+          alert(`the value <${value}> does not look like a url`);
+          return;
+        }
+
+        document.querySelector(".new-link").value = "";
+
+        const item = document.createElement("li");
+        const text = document.createTextNode(value);
+        item.appendChild(text);
+
+        document.querySelector(".links").appendChild(item);
+      }
+
+      function createLinkRoulette() {
+        const links = [];
+        for (let link of document.querySelectorAll(".links li")) {
+          const text = link.textContent;
+          const encoded = btoa(text);
+          links.push("encoded=" + encoded);
+        }
+
+        const baseUrl = window.location.href.slice(
+          0,
+          window.location.href.indexOf("/create")
+        );
+        const link = baseUrl + "/link?" + links.join("&");
+
+        document.querySelector(".roulette-link").innerHTML =
+          '<a href="' + link + '" >' + link + "</a>";
+      }
+
+      function onInputKey(event) {
+        if (event.which === 13 || event.keyCode === 13) {
+          addLink();
+        }
+      }
+    </script>
+  </body>
+</html>

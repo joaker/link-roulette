@@ -5,5 +5,11 @@
   "main": "index.js",
   "repository": "https://github.com/joaker/link-roulette.git",
   "author": "John Oakley <jooakley@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "http-server": "^0.12.1"
+  },
+  "scripts": {
+    "start": "http-server"
+  }
 }

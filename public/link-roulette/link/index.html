@@ -1,0 +1,41 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <div id="root">
+      <h1>Link Roulette</h1>
+      <h2>
+        Welcome to Link Roulette.<br />
+        If you're not redirected in 3 seconds, please click the link below
+      </h2>
+      <div class="roulette-link">
+        your link is being loaded...
+      </div>
+    </div>
+    <script>
+      function random(arr) {
+        const index = Math.floor(Math.random() * arr.length);
+        return arr[index];
+      }
+
+      const delimiter = /[?&]encoded=/;
+      const encodedLinks = window.location.search.split(delimiter);
+      encodedLinks.shift(); // remove empty first element
+
+      const links = [];
+      for (let encoded of encodedLinks) {
+        const link = atob(encoded);
+        links.push(link);
+      }
+
+      const link = random(links);
+
+      document.querySelector(".roulette-link").innerHTML =
+        '<a href="' + link + '" >' + link + "</a>";
+
+      window.location = link;
+    </script>
+  </body>
+</html>
