@@ -46,13 +46,16 @@
         document.querySelector(".new-link").value = "";
 
         const item = document.createElement("li");
+        item.onclick = function removeLink() {
+          this.parentElement.removeChild(this);
+        };
         const text = document.createTextNode(value);
         item.appendChild(text);
 
         document.querySelector(".links").appendChild(item);
       }
 
-      function createLinkRoulette() {
+      function createRouletteUrl() {
         const links = [];
         for (let link of document.querySelectorAll(".links li")) {
           const text = link.textContent;
@@ -65,9 +68,14 @@
           window.location.href.indexOf("/create")
         );
         const link = baseUrl + "/link/index.html?" + links.join("&");
+        return link;
+      }
+
+      function createLinkRoulette() {
+        const link = createRouletteUrl();
 
         document.querySelector(".roulette-link").innerHTML =
-          '<a href="' + link + '" >' + link + "</a>";
+          '<div class="result"><a href="' + link + '" >' + link + "</a></div>";
       }
 
       function onInputKey(event) {
